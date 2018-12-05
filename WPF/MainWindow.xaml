@@ -7,11 +7,13 @@
         mc:Ignorable="d"
         Title="WPF" Height="450" Width="800"
         Background="#2B2B2B"
-        MinHeight="430"
+        MinHeight="200" MinWidth="350"
+        SizeChanged="Window_SizeChanged"
         >
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="500px"></ColumnDefinition>
+            <ColumnDefinition Name="button_col" MaxWidth="500px"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -20,7 +22,7 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition/>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -29,59 +31,78 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Margin="10"
-                    Background="#FF5F5F5F" Foreground="#FFFFFF">
-                <Button.Effect>
-                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
-                </Button.Effect>
-                <TextBlock FontSize="72" FontWeight="Bold">+</TextBlock>
-            </Button>
-            
-            <Button Grid.Column="1" 
+
+            <Button Name="sum_btn" Click="Sum_btn_Click"
                     Margin="10"
                     Background="#FF5F5F5F" Foreground="#FFFFFF">
                 <Button.Effect>
                     <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
                 </Button.Effect>
-                <TextBlock FontSize="72" FontWeight="Bold">-</TextBlock>
+                <Viewbox Stretch="Uniform">
+                    <TextBlock FontSize="72" FontWeight="Bold">+</TextBlock>
+                </Viewbox>
             </Button>
 
-            <Button Grid.Row="1" 
+            <Button Name="sub_btn" Click="Sub_btn_Click"
+                    Grid.Column="1" 
                     Margin="10"
                     Background="#FF5F5F5F" Foreground="#FFFFFF">
                 <Button.Effect>
                     <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
                 </Button.Effect>
-                <TextBlock FontSize="72" FontWeight="Bold">×</TextBlock>
+                                <Viewbox Stretch="Uniform">
+                    <TextBlock FontSize="72" FontWeight="Bold">-</TextBlock>
+                </Viewbox>
             </Button>
 
-            <Button Grid.Column="1" Grid.Row="1" 
+            <Button Name="mult_btn" Click="Mult_btn_Click"
+                    Grid.Row="1" 
                     Margin="10"
                     Background="#FF5F5F5F" Foreground="#FFFFFF">
                 <Button.Effect>
                     <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
                 </Button.Effect>
-                <TextBlock FontSize="72" FontWeight="Bold">÷</TextBlock>
+                <Viewbox Stretch="Uniform">
+                    <TextBlock FontSize="72" FontWeight="Bold">×</TextBlock>
+                </Viewbox>
             </Button>
 
-            <Button Grid.Row="2" 
+            <Button Name="div_btn" Click="Div_btn_Click"
+                    Grid.Column="1" Grid.Row="1" 
                     Margin="10"
                     Background="#FF5F5F5F" Foreground="#FFFFFF">
                 <Button.Effect>
                     <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
                 </Button.Effect>
-                <TextBlock FontSize="72" FontWeight="Bold">%</TextBlock>
+                <Viewbox Stretch="Uniform">
+                    <TextBlock FontSize="72" FontWeight="Bold">÷</TextBlock>
+                </Viewbox>
             </Button>
 
-            <Button Grid.Column="1" Grid.Row="2" 
+            <Button Name="mod_btn" Click="Mod_btn_Click"
+                    Grid.Row="2" 
                     Margin="10"
                     Background="#FF5F5F5F" Foreground="#FFFFFF">
                 <Button.Effect>
                     <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
                 </Button.Effect>
-                <TextBlock FontSize="72" FontWeight="Bold">C</TextBlock>
+                <Viewbox Stretch="Uniform">
+                    <TextBlock FontSize="72" FontWeight="Bold">%</TextBlock>
+                </Viewbox>
             </Button>
-            
+
+            <Button Name="clr_btn" Click="Clr_btn_Click"
+                    Grid.Column="1" Grid.Row="2" 
+                    Margin="10"
+                    Background="#FF5F5F5F" Foreground="#FFFFFF">
+                <Button.Effect>
+                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
+                </Button.Effect>
+                <Viewbox Stretch="Uniform">
+                    <TextBlock FontSize="72" FontWeight="Bold">C</TextBlock>
+                </Viewbox>
+            </Button>
+
         </Grid>
 
         <Grid Grid.Column="1">
@@ -91,16 +112,21 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Grid Margin="10" Background="#FF5F5F5F">
+            <Grid Margin="10" Background="#FF5F5F5F" Name="textbox_grid">
+                <Grid.Effect>
+                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
+                </Grid.Effect>
 
                 <TextBox Name="val1_tbox"
-                         Margin="10"
-                         Background="Transparent" Foreground="#FFFFFF"
-                         FontSize="72"
-                         VerticalAlignment="Center"
-                         BorderBrush="{x:Null}">223</TextBox>
+                        Background="Transparent" Foreground="#FFFFFF"
+                        FontSize="72"
+                        VerticalAlignment="Center"
+                        BorderBrush="{x:Null}"
+                        Margin="32,2,2,2"></TextBox>
 
-                <Button Margin="0" 
+                <Button Name="paste_btn" Click="Paste_btn_Click"
+                        Tag="val1"
+                        Margin="0" 
                         Width="32" Height="32" 
                         HorizontalAlignment="Left" VerticalAlignment="Top" 
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFCBCBCB">
@@ -110,17 +136,22 @@
             </Grid>
 
             <Grid Margin="10"
-                    Grid.Row="1"
-                    Background="#FF5F5F5F">
+                  Grid.Row="1"
+                  Background="#FF5F5F5F">
+                <Grid.Effect>
+                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
+                </Grid.Effect>
 
                 <TextBox Name="val2_tbox"
-                         Margin="10"
-                         Background="Transparent" Foreground="#FFFFFF"
-                         FontSize="72"
-                         VerticalAlignment="Center"
-                         BorderBrush="{x:Null}">223</TextBox>
+                        Background="Transparent" Foreground="#FFFFFF"
+                        FontSize="72"
+                        VerticalAlignment="Center"
+                        BorderBrush="{x:Null}"
+                        Margin="32,2,2,2"></TextBox>
 
-                <Button Margin="0" 
+                <Button Click="Paste_btn_Click"
+                        Tag="val2"
+                        Margin="0" 
                         Width="32" Height="32" 
                         HorizontalAlignment="Left" VerticalAlignment="Top" 
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFCBCBCB">
@@ -131,16 +162,20 @@
             <Grid Margin="10"
                     Grid.Row="2"
                     Background="#FF5F5F5F">
+                <Grid.Effect>
+                    <DropShadowEffect Direction="0" ShadowDepth="0" BlurRadius="10"/>
+                </Grid.Effect>
 
                 <TextBox Name="result_tbox"
-                         IsReadOnly="True"
-                         Margin="10"
-                         Background="Transparent" Foreground="#FFFFFF"
-                         FontSize="72"
-                         VerticalAlignment="Center"
-                         BorderBrush="{x:Null}">223</TextBox>
+                            IsReadOnly="True"
+                            Background="Transparent" Foreground="#FFFFFF"
+                            FontSize="72"
+                            VerticalAlignment="Center"
+                            BorderBrush="{x:Null}"
+                    Margin="32,2,2,2"></TextBox>
 
-                <Button Margin="0" 
+                <Button Name="copy_btn" Click="Copy_btn_Click"
+                        Margin="0" 
                         Width="32" Height="32" 
                         HorizontalAlignment="Left" VerticalAlignment="Top" 
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFCBCBCB">
